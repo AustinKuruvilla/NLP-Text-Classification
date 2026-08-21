@@ -1,166 +1,141 @@
-# NLP Text Classification 🎯
+# SMS Spam Classification using Machine Learning
 
-An end-to-end text classification pipeline demonstrating natural language processing (NLP) fundamentals: text preprocessing, feature extraction with TF-IDF, model training with Logistic Regression, and comprehensive evaluation metrics.
+An end-to-end Natural Language Processing (NLP) project that classifies SMS messages as **spam** or **ham (legitimate)** using character-level TF-IDF features and a Linear Support Vector Machine.
 
-## 📋 Overview
+## Project Overview
 
-This project implements a complete sentiment classification workflow that transforms raw text into predictions using scikit-learn's machine learning pipeline. Perfect for understanding NLP basics and text classification techniques.
+Spam messages are unwanted messages that may contain advertisements, fraudulent offers, malicious links, or other unwanted content.
 
-## ✨ Features
+The goal of this project is to automatically classify SMS messages as either:
 
-- **Text Preprocessing**: Lowercase conversion and punctuation removal
-- **Feature Extraction**: TF-IDF (Term Frequency-Inverse Document Frequency) vectorization
-- **Model Training**: Logistic Regression classifier with cross-validation
-- **Evaluation Metrics**: Precision, recall, F1-score, and confusion matrix
-- **Inference API**: Predict sentiment on new text with confidence scores
-- **Comprehensive Logging**: Detailed output for debugging and understanding
+- **Ham**: legitimate message
+- **Spam**: unwanted message
+
+The workflow covers data loading, cleaning, exploratory analysis, train/test splitting, TF-IDF feature engineering, model training, evaluation, serialization, and Streamlit deployment.
+
+## Dataset
+
+The project uses the [SMS Spam Collection dataset](https://archive.ics.uci.edu/dataset/228/sms+spam+collection), stored at `data/raw/SMSSpamCollection` as tab-separated label/message pairs.
+
+The original dataset contains 5,572 messages. After removing 403 duplicate messages, the working dataset contains 5,169 unique messages: 4,516 ham messages and 653 spam messages.
+
+Spam messages are longer on average than ham messages (138.67 versus 71.48 characters). The dataset is imbalanced, so evaluation focuses on precision, recall, and F1-score rather than accuracy alone.
+
+## Machine Learning Approach
+
+Character-level TF-IDF was selected because SMS messages often contain abbreviations, unusual spelling, URLs, phone numbers, fragmented words, and informal language.
+
+```text
+Analyzer: character
+N-gram range: 3-5
+Minimum document frequency: 2
+Maximum features: 30,000
+```
+
+The classifier is a `LinearSVC` with `class_weight="balanced"`. The stratified train/test split uses a 20% test size and `random_state=42`.
+
+### Model Performance
+
+| Metric    | Score  |
+|-----------|-------:|
+| Accuracy  | 98.74% |
+| Precision | 99.17% |
+| Recall    | 90.84% |
+| F1-score  | 94.82% |
 
 ## 📁 Project Structure
 
-```
+```text
 nlp-text-classification/
+├── app.py                              # Streamlit web application
+├── data/
+│   ├── processed/                      # Processed data outputs
+│   └── raw/SMSSpamCollection           # Raw SMS Spam Collection dataset
+├── models/
+│   ├── spam_classifier.joblib          # Trained LinearSVC model
+│   └── tfidf_char_vectorizer.joblib    # Fitted character TF-IDF vectorizer
 ├── src/
 │   ├── __init__.py
-│   └── pipeline.py           # Main classification pipeline
+│   ├── evaluate.py                     # Metrics and confusion matrix output
+│   ├── load_data.py                    # Dataset loading helper
+│   ├── predict.py                      # Command-line prediction helper
+│   └── train.py                        # Training and model serialization
 ├── tests/
-│   └── test_pipeline.py      # Unit tests for pipeline
+│   └── test_pipeline.py                # Tests
 ├── notebooks/
-│   ├── 01-nlp-text-classification.ipynb    # Interactive Jupyter notebook
-│   └── 01-nlp-text-classification.md       # Notebook markdown export
-├── requirements.txt          # Project dependencies
-└── README.md                 # This file
+│   └── sms_spam_analysis.ipynb         # Analysis notebook
+├── requirements.txt
+└── README.md
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
-### 1. Setup Environment
+### 1. Set up the environment
 
 ```bash
-# Create virtual environment
-python -m venv venv
+python -m venv .venv
 
-# Activate (Windows)
-venv\Scripts\activate
-# Activate (macOS/Linux)
-source venv/bin/activate
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
 
-# Install dependencies
+# macOS/Linux
+source .venv/bin/activate
+
 pip install -r requirements.txt
 ```
 
-### 2. Run the Pipeline
+### 2. Train the model
 
 ```bash
-# Execute the classification demo
-python -m src.pipeline
+python -m src.train
 ```
 
-### 3. Run Tests
+This writes the trained classifier and vectorizer to `models/`.
+
+### 3. Evaluate the model
 
 ```bash
-# From portfolio root
-python run_basic_tests.py
+python -m src.evaluate
 ```
 
-### 4. Explore in Jupyter
+The command prints accuracy, precision, recall, F1-score, a classification report, and a confusion matrix.
+
+### 4. Predict from the command line
 
 ```bash
-jupyter notebook notebooks/01-nlp-text-classification.ipynb
+python -m src.predict
 ```
 
-## 📊 Example Output
+Enter an SMS message when prompted.
 
-```
-Text: "I love this product, it's amazing!"
-Prediction: Positive (confidence: 94.3%)
+### 5. Run the Streamlit app
 
-Classification Report:
-              precision    recall  f1-score   support
-      Negative       0.95      0.92      0.93        50
-      Positive       0.91      0.95      0.93        50
-
-accuracy                                   0.93       100
+```bash
+streamlit run app.py
 ```
 
-## 🔧 Technical Stack
+The app loads the serialized model artifacts and returns a ham or spam prediction for a message entered in the text area.
+
+## Testing
+
+Run the available tests with:
+
+```bash
+pytest
+```
+
+## Technical Stack
 
 | Component | Technology |
 |-----------|------------|
-| **Language** | Python 3.7+ |
-| **NLP** | scikit-learn (TF-IDF) |
-| **ML Framework** | scikit-learn (Logistic Regression) |
-| **Data Analysis** | pandas, numpy |
-| **Notebooks** | Jupyter |
+| Language | Python |
+| Data processing | pandas, NumPy |
+| Feature engineering | scikit-learn `TfidfVectorizer` |
+| Classifier | scikit-learn `LinearSVC` |
+| Model serialization | joblib |
+| Web deployment | Streamlit |
+| Analysis | Jupyter, Matplotlib, Seaborn |
 
-## 📦 Dependencies
+## License
 
-- scikit-learn (machine learning and NLP)
-- pandas (data manipulation)
-- numpy (numerical computing)
-
-See `requirements.txt` for exact versions.
-
-## 🎓 What You'll Learn
-
-- Text preprocessing techniques
-- TF-IDF vectorization for feature extraction
-- Logistic Regression for classification
-- Model evaluation metrics (precision, recall, F1)
-- Cross-validation and hyperparameter tuning
-- Inference and prediction on new data
-
-## 📝 Key Functions
-
-### `preprocess_text(text: str) -> str`
-Cleans text by converting to lowercase and removing punctuation.
-
-### `build_demo_dataset() -> pd.DataFrame`
-Creates a sample dataset with 8 sentiment-labeled examples for training.
-
-### `train_and_evaluate(df: pd.DataFrame) -> tuple`
-Trains TF-IDF + Logistic Regression pipeline and evaluates performance.
-
-### `predict(text: str, model, vectorizer) -> tuple`
-Makes predictions on new text with confidence scores.
-
-## 🔍 Example Usage
-
-```python
-from src.pipeline import train_and_evaluate, predict, build_demo_dataset
-
-# Load or create data
-df = build_demo_dataset()
-
-# Train model
-model, vectorizer = train_and_evaluate(df)
-
-# Make predictions
-text = "This is an amazing experience!"
-label, confidence = predict(text, model, vectorizer)
-print(f"Prediction: {label} ({confidence:.1%})")
-```
-
-## 🧪 Testing
-
-Unit tests verify:
-- ✅ Dataset creation with correct structure
-- ✅ Text preprocessing correctness
-- ✅ Pipeline execution and model training
-- ✅ Prediction functionality
-
-Run tests with: `python run_basic_tests.py`
-
-## 📚 Further Reading
-
-- [Scikit-learn TF-IDF Documentation](https://scikit-learn.org/stable/modules/generated.html#module-sklearn.feature_extraction.text)
-- [Logistic Regression Guide](https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression)
-- [NLP Best Practices](https://towardsdatascience.com/10-common-mistakes-in-nlp-7ae5ad0980a5)
-
-## 📄 License
-
-This project is part of a portfolio and open to use for educational purposes.
-
----
-
-**Last Updated**: August 2026  
-**Status**: Production Ready ✅
+This project is part of a portfolio and is intended for educational purposes.

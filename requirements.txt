@@ -1,5 +1,9 @@
-numpy
 pandas
+numpy
 scikit-learn
-nltk
+matplotlib
+seaborn
 joblib
+streamlit
+jupyter
+ipykernel
