@@ -113,6 +113,7 @@ Enter an SMS message when prompted.
 ```bash
 streamlit run app.py
 ```
+[streamlit demo](https://austinkuruvilla-nlp-text-classification-app-1zee8h.streamlit.app/)
 
 The app loads the serialized model artifacts and returns a ham or spam prediction for a message entered in the text area.
 
