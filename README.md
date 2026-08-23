@@ -68,62 +68,13 @@ nlp-text-classification/
 └── README.md
 ```
 
-## Quick Start
-
-### 1. Set up the environment
-
-```bash
-python -m venv .venv
-
-# Windows PowerShell
-.venv\Scripts\Activate.ps1
-
-# macOS/Linux
-source .venv/bin/activate
-
-pip install -r requirements.txt
-```
-
-### 2. Train the model
-
-```bash
-python -m src.train
-```
-
-This writes the trained classifier and vectorizer to `models/`.
-
-### 3. Evaluate the model
-
-```bash
-python -m src.evaluate
-```
-
-The command prints accuracy, precision, recall, F1-score, a classification report, and a confusion matrix.
-
-### 4. Predict from the command line
-
-```bash
-python -m src.predict
-```
-
-Enter an SMS message when prompted.
-
-### 5. Run the Streamlit app
-
-```bash
-streamlit run app.py
+# Output
 ```
 [streamlit demo](https://austinkuruvilla-nlp-text-classification-app-1zee8h.streamlit.app/)
 ![](data/Screenshot%202026-08-21%20141226.png)
 The app loads the serialized model artifacts and returns a ham or spam prediction for a message entered in the text area.
 
-## Testing
 
-Run the available tests with:
-
-```bash
-pytest
-```
 
 ## Technical Stack
 
