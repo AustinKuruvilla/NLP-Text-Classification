@@ -74,7 +74,7 @@ nlp-text-classification/
 ![](data/Screenshot%202026-08-21%20141226.png)
 The app loads the serialized model artifacts and returns a ham or spam prediction for a message entered in the text area.
 
-
+```
 
 ## Technical Stack
 
