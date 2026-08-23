@@ -1,6 +1,6 @@
 # SMS Spam Classification using Machine Learning
 
-An end-to-end Natural Language Processing (NLP) project that classifies SMS messages as **spam** or **ham (legitimate)** using character-level TF-IDF features and a Linear Support Vector Machine.
+Developed an end-to-end SMS spam classification system using character-level TF-IDF and Linear SVM, comparing three machine learning approaches and performing error analysis. Achieved 98.74% accuracy, 99.17% precision, and 94.82% F1-score on a held-out test set. Deployed the trained model through an interactive Streamlit application.
 
 ## Project Overview
 
