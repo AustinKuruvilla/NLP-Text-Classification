@@ -69,9 +69,9 @@ nlp-text-classification/
 ```
 
 # Output
-[streamlit demo](https://austinkuruvilla-nlp-text-classification-app-1zee8h.streamlit.app/)
+
 ![](data/Screenshot%202026-08-21%20141226.png)
-The app loads the serialized model artifacts and returns a ham or spam prediction for a message entered in the text area.
+The app loads the serialized model artifacts and returns a ham or spam prediction for a message entered in the text area.[streamlit demo](https://austinkuruvilla-nlp-text-classification-app-1zee8h.streamlit.app/)
 
 
 
